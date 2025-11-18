@@ -1,7 +1,12 @@
+# MagicCommerce – AI-Enhanced E-Commerce Platform for Small Retailers
 
-# MagicCommerce - Modern E-commerce Platform
+## Overview
 
-A full-stack e-commerce platform built with Next.js 15, featuring user authentication, product management, shopping cart functionality, and secure payment processing with Stripe.
+MagicCommerce is a full-stack e-commerce platform with AI-powered features designed for small-to-medium retailers and online stores. The platform combines traditional e-commerce functionality with intelligent product recommendations, automated inventory management, and AI-enhanced customer service to help SMEs compete with larger retailers.
+
+Built for small businesses that need enterprise-grade e-commerce capabilities without the complexity, MagicCommerce leverages Azure AI to deliver personalized shopping experiences and automated operations that drive revenue growth.
+
+**Demo**: https://magiccommerce.shtrial.com
 
 ## Features
 

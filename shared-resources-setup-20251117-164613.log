@@ -1,0 +1,16 @@
+[2025-11-17 16:48:00] [SUCCESS] Set repository secret: AZURE_STORAGE_BLOB_ENDPOINT
+[2025-11-17 16:48:01] [SUCCESS] Set repository secret: AZURE_STORAGE_CONNECTION_STRING
+[2025-11-17 16:48:01] [SUCCESS] Set repository secret: AZURE_OPENAI_ENDPOINT
+[2025-11-17 16:48:02] [SUCCESS] Set repository secret: AZURE_STORAGE_CONTAINER
+[2025-11-17 16:48:03] [SUCCESS] Set repository secret: AZURE_OPENAI_API_VERSION
+[2025-11-17 16:48:03] [WARN] Error setting repository secret COPILOT_MCP_AZURE_OPENAI_API_KEY: flag needs an argument: --body
+[2025-11-17 16:48:03] [SUCCESS] Set repository secret: AZURE_OPENAI_DEPLOYMENT
+[2025-11-17 16:48:04] [SUCCESS] Set repository secret: AZURE_STORAGE_ACCOUNT
+[2025-11-17 16:48:04] [WARN] Error setting copilot environment secret AZURE_STORAGE_BLOB_ENDPOINT: failed to fetch public key: HTTP 404: Not Found (https://api.github.com/repos/shmindmaster/MagicCommerce/environments/copilot/secrets/public-key)
+[2025-11-17 16:48:05] [WARN] Error setting copilot environment secret AZURE_STORAGE_CONNECTION_STRING: failed to fetch public key: HTTP 404: Not Found (https://api.github.com/repos/shmindmaster/MagicCommerce/environments/copilot/secrets/public-key)
+[2025-11-17 16:48:05] [WARN] Error setting copilot environment secret AZURE_OPENAI_ENDPOINT: failed to fetch public key: HTTP 404: Not Found (https://api.github.com/repos/shmindmaster/MagicCommerce/environments/copilot/secrets/public-key)
+[2025-11-17 16:48:05] [WARN] Error setting copilot environment secret AZURE_STORAGE_CONTAINER: failed to fetch public key: HTTP 404: Not Found (https://api.github.com/repos/shmindmaster/MagicCommerce/environments/copilot/secrets/public-key)
+[2025-11-17 16:48:06] [WARN] Error setting copilot environment secret AZURE_OPENAI_API_VERSION: failed to fetch public key: HTTP 404: Not Found (https://api.github.com/repos/shmindmaster/MagicCommerce/environments/copilot/secrets/public-key)
+[2025-11-17 16:48:06] [WARN] Error setting copilot environment secret COPILOT_MCP_AZURE_OPENAI_API_KEY: flag needs an argument: --body
+[2025-11-17 16:48:06] [WARN] Error setting copilot environment secret AZURE_OPENAI_DEPLOYMENT: failed to fetch public key: HTTP 404: Not Found (https://api.github.com/repos/shmindmaster/MagicCommerce/environments/copilot/secrets/public-key)
+[2025-11-17 16:48:07] [WARN] Error setting copilot environment secret AZURE_STORAGE_ACCOUNT: failed to fetch public key: HTTP 404: Not Found (https://api.github.com/repos/shmindmaster/MagicCommerce/environments/copilot/secrets/public-key)
