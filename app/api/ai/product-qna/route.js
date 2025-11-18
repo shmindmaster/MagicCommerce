@@ -18,6 +18,7 @@ export async function POST(req) {
     });
 
     if (!product) {
+      await prisma.$disconnect();
       return new NextResponse('Product not found', { status: 404 });
     }
 
