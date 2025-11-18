@@ -1,0 +1,310 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]:
+        - list [ref=e7]:
+          - listitem [ref=e8] [cursor=pointer]:
+            - generic [ref=e10]: JP
+          - listitem [ref=e11] [cursor=pointer]: Daily Deals
+          - listitem [ref=e12] [cursor=pointer]: Help & Contact
+        - list [ref=e13]:
+          - listitem [ref=e14]:
+            - generic [ref=e15] [cursor=pointer]: Ship to Japan
+          - listitem [ref=e18] [cursor=pointer]:
+            - img [ref=e20]
+      - navigation [ref=e23]:
+        - generic [ref=e25]:
+          - link "MagicCommerce MagicCommerce" [ref=e26] [cursor=pointer]:
+            - /url: /
+            - img "MagicCommerce" [ref=e27]
+            - generic [ref=e28]: MagicCommerce
+          - generic [ref=e31]:
+            - generic [ref=e32]:
+              - button [ref=e33] [cursor=pointer]:
+                - img [ref=e34]
+              - textbox "Search for anything" [ref=e36]
+            - button "Search" [ref=e37] [cursor=pointer]
+            - generic [ref=e38] [cursor=pointer]: Advanced
+      - list [ref=e41]:
+        - listitem [ref=e42] [cursor=pointer]: Home
+        - listitem [ref=e43] [cursor=pointer]: Saved
+        - listitem [ref=e44] [cursor=pointer]: Electronics
+        - listitem [ref=e45] [cursor=pointer]: Motors
+        - listitem [ref=e46] [cursor=pointer]: Fashion
+        - listitem [ref=e47] [cursor=pointer]: Collectables and Art
+        - listitem [ref=e48] [cursor=pointer]: Sports
+        - listitem [ref=e49] [cursor=pointer]: Health & Beauty
+        - listitem [ref=e50] [cursor=pointer]: Industrial Equipment
+        - listitem [ref=e51] [cursor=pointer]: Home & Garden
+        - listitem [ref=e52] [cursor=pointer]: Sell
+    - generic [ref=e53]:
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - list [ref=e58]:
+            - button "slide item 1" [ref=e59] [cursor=pointer]
+            - button "slide item 2" [ref=e60] [cursor=pointer]
+            - button "slide item 3" [ref=e61] [cursor=pointer]
+          - button "previous slide / item" [ref=e62] [cursor=pointer]
+          - list [ref=e64]:
+            - listitem [ref=e65]:
+              - generic [ref=e66]:
+                - img "MagicCommerce Mobile App"
+            - listitem [ref=e67]:
+              - generic [ref=e68]:
+                - img "Credits applied to your account"
+            - listitem [ref=e69]:
+              - generic [ref=e70]:
+                - img "Save on shipments"
+            - listitem [ref=e71]:
+              - generic [ref=e72]:
+                - img "MagicCommerce Mobile App"
+            - listitem [ref=e73]:
+              - generic [ref=e74]:
+                - img "Credits applied to your account"
+          - button "next slide / item" [ref=e75] [cursor=pointer]
+        - list [ref=e78]:
+          - button "slide item 1" [ref=e79] [cursor=pointer]:
+            - img "Credits applied to your account"
+          - button "slide item 2" [ref=e80] [cursor=pointer]:
+            - img "Save on shipments"
+          - button "slide item 3" [ref=e81] [cursor=pointer]:
+            - img "MagicCommerce Mobile App"
+      - generic [ref=e82]:
+        - generic [ref=e83]: Products
+        - generic [ref=e84]:
+          - link "Leather Messenger Bag $89.99 $107.99 - 20%" [ref=e85] [cursor=pointer]:
+            - /url: /product/1
+            - img
+            - generic [ref=e86]:
+              - generic [ref=e87]: Leather Messenger Bag
+              - generic [ref=e88]: $89.99
+              - generic [ref=e89]:
+                - generic [ref=e90]: $107.99
+                - generic [ref=e91]: "-"
+                - generic [ref=e92]: 20%
+          - link "College Textbook Bundle $124.99 $149.99 - 20%" [ref=e93] [cursor=pointer]:
+            - /url: /product/2
+            - img
+            - generic [ref=e94]:
+              - generic [ref=e95]: College Textbook Bundle
+              - generic [ref=e96]: $124.99
+              - generic [ref=e97]:
+                - generic [ref=e98]: $149.99
+                - generic [ref=e99]: "-"
+                - generic [ref=e100]: 20%
+          - link "Women's Running Sneakers $149.99 $179.99 - 20%" [ref=e101] [cursor=pointer]:
+            - /url: /product/3
+            - img
+            - generic [ref=e102]:
+              - generic [ref=e103]: Women's Running Sneakers
+              - generic [ref=e104]: $149.99
+              - generic [ref=e105]:
+                - generic [ref=e106]: $179.99
+                - generic [ref=e107]: "-"
+                - generic [ref=e108]: 20%
+          - link "Vintage Literature Collection $299.99 $359.99 - 20%" [ref=e109] [cursor=pointer]:
+            - /url: /product/4
+            - img
+            - generic [ref=e110]:
+              - generic [ref=e111]: Vintage Literature Collection
+              - generic [ref=e112]: $299.99
+              - generic [ref=e113]:
+                - generic [ref=e114]: $359.99
+                - generic [ref=e115]: "-"
+                - generic [ref=e116]: 20%
+          - link "Artisan Coffee Mug $18.99 $22.79 - 20%" [ref=e117] [cursor=pointer]:
+            - /url: /product/5
+            - img
+            - generic [ref=e118]:
+              - generic [ref=e119]: Artisan Coffee Mug
+              - generic [ref=e120]: $18.99
+              - generic [ref=e121]:
+                - generic [ref=e122]: $22.79
+                - generic [ref=e123]: "-"
+                - generic [ref=e124]: 20%
+          - link "Premium Motor Oil Case $79.99 $95.99 - 20%" [ref=e125] [cursor=pointer]:
+            - /url: /product/6
+            - img
+            - generic [ref=e126]:
+              - generic [ref=e127]: Premium Motor Oil Case
+              - generic [ref=e128]: $79.99
+              - generic [ref=e129]:
+                - generic [ref=e130]: $95.99
+                - generic [ref=e131]: "-"
+                - generic [ref=e132]: 20%
+          - link "Photography Equipment Kit $499.99 $599.99 - 20%" [ref=e133] [cursor=pointer]:
+            - /url: /product/7
+            - img
+            - generic [ref=e134]:
+              - generic [ref=e135]: Photography Equipment Kit
+              - generic [ref=e136]: $499.99
+              - generic [ref=e137]:
+                - generic [ref=e138]: $599.99
+                - generic [ref=e139]: "-"
+                - generic [ref=e140]: 20%
+          - link "Vintage Turntable $399.99 $479.99 - 20%" [ref=e141] [cursor=pointer]:
+            - /url: /product/8
+            - img
+            - generic [ref=e142]:
+              - generic [ref=e143]: Vintage Turntable
+              - generic [ref=e144]: $399.99
+              - generic [ref=e145]:
+                - generic [ref=e146]: $479.99
+                - generic [ref=e147]: "-"
+                - generic [ref=e148]: 20%
+          - link "Dining Room Table Set $1299.99 $1559.99 - 20%" [ref=e149] [cursor=pointer]:
+            - /url: /product/9
+            - img
+            - generic [ref=e150]:
+              - generic [ref=e151]: Dining Room Table Set
+              - generic [ref=e152]: $1299.99
+              - generic [ref=e153]:
+                - generic [ref=e154]: $1559.99
+                - generic [ref=e155]: "-"
+                - generic [ref=e156]: 20%
+          - link "MacBook Pro 16-inch $2499.99 $2999.99 - 20%" [ref=e157] [cursor=pointer]:
+            - /url: /product/10
+            - img
+            - generic [ref=e158]:
+              - generic [ref=e159]: MacBook Pro 16-inch
+              - generic [ref=e160]: $2499.99
+              - generic [ref=e161]:
+                - generic [ref=e162]: $2999.99
+                - generic [ref=e163]: "-"
+                - generic [ref=e164]: 20%
+          - link "Cape Cod Lighthouse Model $899.99 $1079.99 - 20%" [ref=e165] [cursor=pointer]:
+            - /url: /product/11
+            - img
+            - generic [ref=e166]:
+              - generic [ref=e167]: Cape Cod Lighthouse Model
+              - generic [ref=e168]: $899.99
+              - generic [ref=e169]:
+                - generic [ref=e170]: $1079.99
+                - generic [ref=e171]: "-"
+                - generic [ref=e172]: 20%
+          - link "Gaming Setup Bundle $1799.99 $2159.99 - 20%" [ref=e173] [cursor=pointer]:
+            - /url: /product/12
+            - img
+            - generic [ref=e174]:
+              - generic [ref=e175]: Gaming Setup Bundle
+              - generic [ref=e176]: $1799.99
+              - generic [ref=e177]:
+                - generic [ref=e178]: $2159.99
+                - generic [ref=e179]: "-"
+                - generic [ref=e180]: 20%
+          - link "Artisan Tea Set $5.99 $7.19 - 20%" [ref=e181] [cursor=pointer]:
+            - /url: /product/13
+            - img
+            - generic [ref=e182]:
+              - generic [ref=e183]: Artisan Tea Set
+              - generic [ref=e184]: $5.99
+              - generic [ref=e185]:
+                - generic [ref=e186]: $7.19
+                - generic [ref=e187]: "-"
+                - generic [ref=e188]: 20%
+          - link "Wireless Gaming Controller $69.99 $83.99 - 20%" [ref=e189] [cursor=pointer]:
+            - /url: /product/14
+            - img
+            - generic [ref=e190]:
+              - generic [ref=e191]: Wireless Gaming Controller
+              - generic [ref=e192]: $69.99
+              - generic [ref=e193]:
+                - generic [ref=e194]: $83.99
+                - generic [ref=e195]: "-"
+                - generic [ref=e196]: 20%
+          - link "Fresh Organic Raspberries $8.99 $10.79 - 20%" [ref=e197] [cursor=pointer]:
+            - /url: /product/15
+            - img
+            - generic [ref=e198]:
+              - generic [ref=e199]: Fresh Organic Raspberries
+              - generic [ref=e200]: $8.99
+              - generic [ref=e201]:
+                - generic [ref=e202]: $10.79
+                - generic [ref=e203]: "-"
+                - generic [ref=e204]: 20%
+          - link "Classic American Muscle Car $45999.99 $55199.99 - 20%" [ref=e205] [cursor=pointer]:
+            - /url: /product/16
+            - img
+            - generic [ref=e206]:
+              - generic [ref=e207]: Classic American Muscle Car
+              - generic [ref=e208]: $45999.99
+              - generic [ref=e209]:
+                - generic [ref=e210]: $55199.99
+                - generic [ref=e211]: "-"
+                - generic [ref=e212]: 20%
+          - link "Mac Studio Desktop $3999.99 $4799.99 - 20%" [ref=e213] [cursor=pointer]:
+            - /url: /product/17
+            - img
+            - generic [ref=e214]:
+              - generic [ref=e215]: Mac Studio Desktop
+              - generic [ref=e216]: $3999.99
+              - generic [ref=e217]:
+                - generic [ref=e218]: $4799.99
+                - generic [ref=e219]: "-"
+                - generic [ref=e220]: 20%
+          - link "Rustic Wooden Bench $249.99 $299.99 - 20%" [ref=e221] [cursor=pointer]:
+            - /url: /product/18
+            - img
+            - generic [ref=e222]:
+              - generic [ref=e223]: Rustic Wooden Bench
+              - generic [ref=e224]: $249.99
+              - generic [ref=e225]:
+                - generic [ref=e226]: $299.99
+                - generic [ref=e227]: "-"
+                - generic [ref=e228]: 20%
+          - link "Classic Car Collection $159999.99 $191999.99 - 20%" [ref=e229] [cursor=pointer]:
+            - /url: /product/19
+            - img
+            - generic [ref=e230]:
+              - generic [ref=e231]: Classic Car Collection
+              - generic [ref=e232]: $159999.99
+              - generic [ref=e233]:
+                - generic [ref=e234]: $191999.99
+                - generic [ref=e235]: "-"
+                - generic [ref=e236]: 20%
+          - link "Acoustic Guitar $799.99 $959.99 - 20%" [ref=e237] [cursor=pointer]:
+            - /url: /product/20
+            - img
+            - generic [ref=e238]:
+              - generic [ref=e239]: Acoustic Guitar
+              - generic [ref=e240]: $799.99
+              - generic [ref=e241]:
+                - generic [ref=e242]: $959.99
+                - generic [ref=e243]: "-"
+                - generic [ref=e244]: 20%
+    - generic [ref=e247]:
+      - list [ref=e248]:
+        - listitem [ref=e249]: Buy
+        - listitem [ref=e250] [cursor=pointer]: Registration
+        - listitem [ref=e251] [cursor=pointer]: MagicCommerce Money Back Guarantee
+        - listitem [ref=e252] [cursor=pointer]: Bidding & buying help
+        - listitem [ref=e253] [cursor=pointer]: Stores
+      - list [ref=e254]:
+        - listitem [ref=e255]: Sell
+        - listitem [ref=e256] [cursor=pointer]: Start selling
+        - listitem [ref=e257] [cursor=pointer]: Learn to sell
+        - listitem [ref=e258] [cursor=pointer]: Affiliates
+      - list [ref=e259]:
+        - listitem [ref=e260]: About MagicCommerce
+        - listitem [ref=e261] [cursor=pointer]: Company info
+        - listitem [ref=e262] [cursor=pointer]: News
+        - listitem [ref=e263] [cursor=pointer]: Investors
+        - listitem [ref=e264] [cursor=pointer]: Carears
+        - listitem [ref=e265] [cursor=pointer]: Government relations
+        - listitem [ref=e266] [cursor=pointer]: Policies
+      - list [ref=e267]:
+        - listitem [ref=e268]: Sell
+        - listitem [ref=e269] [cursor=pointer]: Start selling
+        - listitem [ref=e270] [cursor=pointer]: Learn to sell
+        - listitem [ref=e271] [cursor=pointer]: Affiliates
+      - list [ref=e272]:
+        - listitem [ref=e273]: Buy
+        - listitem [ref=e274] [cursor=pointer]: Registration
+        - listitem [ref=e275] [cursor=pointer]: MagicCommerce Money Back Guarantee
+        - listitem [ref=e276] [cursor=pointer]: Bidding & buying help
+        - listitem [ref=e277] [cursor=pointer]: Stores
+  - alert [ref=e278]
+```
