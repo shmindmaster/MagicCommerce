@@ -24,6 +24,7 @@ export default function AIAssistantChat({ cartProductIds = [] }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: nextMessages, cartProductIds }),
       });
+      if (!res.ok) throw new Error('Failed to get response');
       const data = await res.json();
       setMessages([...nextMessages, { role: 'assistant', content: data.answer }]);
     } catch (err) {
