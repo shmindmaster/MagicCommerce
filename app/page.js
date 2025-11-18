@@ -5,6 +5,8 @@ import CarouselComp from './components/CarouselComp'
 import Product from './components/Product';
 import MainLayout from './layouts/MainLayout';
 import useIsLoading from "@/app/hooks/useIsLoading"
+import AIAssistantChat from './components/AIAssistantChat';
+import { features } from './libs/config';
 
 export default function Home() {
 
@@ -38,6 +40,7 @@ export default function Home() {
             </div>
           </div>
         </MainLayout>
+        {features.aiChat && <AIAssistantChat cartProductIds={[]} />}
     </>
   )
 }

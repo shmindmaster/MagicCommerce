@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineSearch } from 'react-icons/ai'
 import { BiLoaderCircle } from 'react-icons/bi'
+import { features } from '@/app/libs/config';
 
 export default function MainLayout() {
 
@@ -12,7 +13,8 @@ export default function MainLayout() {
     const [isSearching, setIsSearching] = useState(null)
 
     const handleSearchName = debounce(async (event) => {
-        if (event.target.value == "") {
+        const value = event.target.value;
+        if (value === "") {
             setItems([])
             return
         }
@@ -20,8 +22,13 @@ export default function MainLayout() {
         setIsSearching(true)
 
         try {
-            const response = await fetch(`/api/products/search-by-name/${event.target.value}`)
-            const result = await response.json()
+            // Use AI search if enabled, otherwise fall back to regular search
+            const searchEndpoint = features.aiSearch
+                ? `/api/products/ai-search?q=${encodeURIComponent(value)}`
+                : `/api/products/search-by-name/${value}`;
+            
+            const response = await fetch(searchEndpoint);
+            const result = await response.json();
 
             if (result) {
                 setItems(result)
@@ -33,6 +40,7 @@ export default function MainLayout() {
         } catch (error) {
             console.log(error)
             alert(error)
+            setIsSearching(false)
         }
     }, 500)
 

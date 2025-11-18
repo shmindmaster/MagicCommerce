@@ -4,13 +4,18 @@ import { useEffect, useState } from "react"
 import ProductComp from "./Product"
 import { BiLoader } from 'react-icons/bi'
 
-export default function SimilarProducts () {
+export default function SimilarProducts ({ productId }) {
 
   const [products, setProducts] = useState([])
 
   const getRandomProducts = async () => {
     try {
-      const response = await fetch('/api/products/get-random')
+      // Use recommendations API if productId is available, otherwise fall back to random
+      const endpoint = productId 
+        ? `/api/products/recommendations?productId=${productId}`
+        : '/api/products/get-random';
+      
+      const response = await fetch(endpoint)
       const result = await response.json()
 
       if (result) {
@@ -25,7 +30,11 @@ export default function SimilarProducts () {
     }
   }
 
-  useEffect(() => { getRandomProducts() }, [])
+  useEffect(() => { 
+    if (productId) {
+      getRandomProducts() 
+    }
+  }, [productId])
 
   return ( 
     <>

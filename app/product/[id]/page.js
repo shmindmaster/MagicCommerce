@@ -2,10 +2,12 @@
 
 import MainLayout from "../../layouts/MainLayout"
 import SimilarProducts from "../../components/SimilarProducts"
+import ProductQnA from "../../components/ProductQnA"
 import { useEffect, useState } from "react"
 import useIsLoading from "../../hooks/useIsLoading"
 import { useCart } from "../../context/cart"
 import { toast } from "react-toastify"
+import { features } from '@/app/libs/config';
 
 export default function Product({ params }) {
   const cart = useCart()
@@ -101,11 +103,15 @@ export default function Product({ params }) {
                 <div className="text-sm">{product?.description}</div>
               </div>
 
+              {features.aiProductQnA && product?.id && (
+                <ProductQnA productId={product.id} />
+              )}
+
             </div>
           </div>
         </div>
 
-        <SimilarProducts />
+        <SimilarProducts productId={product?.id} />
 
         </MainLayout>
     </>
