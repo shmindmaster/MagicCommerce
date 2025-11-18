@@ -8,6 +8,7 @@ export async function POST(req) {
     const { productId, question } = await req.json();
 
     if (!productId || !question) {
+      await prisma.$disconnect();
       return new NextResponse('Missing productId or question', { status: 400 });
     }
 
