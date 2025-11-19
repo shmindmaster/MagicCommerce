@@ -1,26 +1,29 @@
-# GitHub Copilot Instructions - FlashMaster
-
-## Project Context
-
-AI-powered flashcard learning platform built with Next.js 15, deployed to Azure Static Web Apps at https://flashmaster.shtrial.com.
-
-## Architecture Constraints
-
-**MANDATORY: Use shared Azure platform resources**
-
-- Azure OpenAI: `shared-openai-eastus2` (gpt-5.1, text-embedding-3-large)
-- Azure Storage: `stmahumsharedapps` (container: flashmaster)
-- Azure Key Vault: `kv-mahum-shared-apps` (secrets)
-
-**PROHIBITED: Never introduce**
-
-- OpenAI public API (use Azure OpenAI)
-- Supabase, Firebase (use Azure Storage)
-- Google Gemini, Anthropic (use Azure OpenAI)
-- AWS S3, GCS (use Azure Blob Storage)
-- Hardcoded API keys (use environment variables)
-
-## Code Generation Preferences
+ # GitHub Copilot Instructions - Magicommerce
+ 
+ ## Project Context
+ 
+ Magicommerce is an AI-native e-commerce demo built with Next.js 15 (App Router) + TypeScript. It uses shared MahumTech Azure resources for AI, search, storage, and Postgres, and is deployed to Azure Container Apps/App Service at https://magiccommerce.shtrial.com.
+ 
+ ## Architecture Constraints
+ 
+ **MANDATORY: Use shared MahumTech Azure platform resources**
+ 
+ - Azure OpenAI: `shared-openai-eastus2` (gpt-5.1-mini, text-embedding-3-small, GPT-4o-mini vision)
+ - Azure Database for PostgreSQL: `pg-shared-apps-eastus2` (database `magicommerce`)
+ - Azure AI Search: `shared-search-standard-eastus2` (index: `magicommerce-products`)
+ - Azure Storage: `stmahumsharedapps` (container: `magicommerce-assets`)
+ - Secrets: `.env.local` + GitHub Secrets + Azure App Configuration / Container Apps env vars (**no Key Vault usage for this app**)
+ 
+ **PROHIBITED: Never introduce**
+ 
+ - OpenAI public API (use Azure OpenAI instead)
+ - Supabase, Firebase (use Azure Postgres + Blob Storage)
+ - Google Gemini, Anthropic (use Azure OpenAI)
+ - AWS S3, GCS (use Azure Blob Storage)
+ - Hardcoded API keys or connection strings
+ - New per-app Azure OpenAI / Postgres / Storage / Key Vault resources
+ 
+ ## Code Generation Preferences
 
 ### Component Pattern
 
@@ -62,14 +65,14 @@ export async function POST(request: NextRequest) {
 ### Azure OpenAI Pattern
 
 ```typescript
-import { azureOpenAI } from '@/lib/azureOpenAI';
+import { chatCompletion } from '@/app/libs/azureOpenAI';
 
-const response = await azureOpenAI.chat.completions.create({
-  model: process.env.AZURE_OPENAI_CHAT_DEPLOYMENT!,
+const reply = await chatCompletion({
   messages: [
     { role: 'system', content: 'System prompt' },
     { role: 'user', content: userInput },
   ],
+  maxTokens: 512,
 });
 ```
 

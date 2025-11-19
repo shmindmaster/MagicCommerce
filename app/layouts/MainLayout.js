@@ -5,6 +5,7 @@ import MainHeader from './includes/MainHeader'
 import SubMenu from './includes/SubMenu'
 import Footer from './includes/Footer'
 import Loading from '../components/Loading'
+import HealthStatusBadge from '../components/HealthStatusBadge'
 import { useEffect, useState } from 'react'
 
 export default function MainLayout({ children }) {
@@ -25,6 +26,7 @@ export default function MainLayout({ children }) {
               <TopMenu />
               <MainHeader />
               <SubMenu />
+              <HealthStatusBadge />
             </div>
 
             <div>{children}</div>

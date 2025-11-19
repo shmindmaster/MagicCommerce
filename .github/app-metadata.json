@@ -1,0 +1,36 @@
+{
+  "appId": "magicommerce",
+  "name": "Magicommerce",
+  "description": "AI-native e-commerce demo using shared MahumTech Azure resources (OpenAI, Postgres, AI Search, Blob Storage).",
+  "homepage": "https://magiccommerce.shtrial.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shmindmaster/shmindmaster",
+    "path": "MagicCommerce"
+  },
+  "platform": {
+    "framework": "nextjs-15-app-router",
+    "language": "typescript",
+    "packageManager": "pnpm",
+    "styling": "tailwindcss-v3"
+  },
+  "azure": {
+    "resourceGroupWeb": "rg-shared-web",
+    "resourceGroupAi": "rg-shared-ai",
+    "containerRegistry": "acrmahumshared",
+    "openAiResource": "shared-openai-eastus2",
+    "postgresServer": "pg-shared-apps-eastus2",
+    "postgresDatabase": "magicommerce",
+    "searchService": "shared-search-standard-eastus2",
+    "searchIndexProducts": "magicommerce-products",
+    "storageAccount": "stmahumsharedapps",
+    "storageContainer": "magicommerce-assets"
+  },
+  "envSchemaRef": ".env.example",
+  "deployment": {
+    "workflow": ".github/workflows/deploy.yml",
+    "imageName": "magicommerce",
+    "appName": "magicommerce-web",
+    "usesStandaloneNextOutput": true
+  }
+}

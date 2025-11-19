@@ -1,100 +1,45 @@
-name: Deploy Next.js to Azure Container Apps
+﻿name: Deploy MagicCommerce Container App
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 env:
-  AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  AZURE_SUBSCRIPTION_ID: 44e77ffe-2c39-4726-b6f0-2c733c7ffe78
   RESOURCE_GROUP: rg-shared-web
-  REGISTRY_NAME: acrmahumshared
-  REGISTRY_URL: acrmahumshared.azurecr.io
-  IMAGE_NAME: magicommerce
-  APP_NAME: magicommerce-web
+  CONTAINER_APP_NAME: magiccommerce-api
+  ACR_NAME: acrmahumshared
+  IMAGE_NAME: magiccommerce
 
 jobs:
-  build_and_deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'pnpm'
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
-          run_install: false
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build Next.js
-        run: pnpm build
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
-          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
-
-      - name: Log in to Azure Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY_URL }}
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }},${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
-
       - name: Azure Login
-        uses: azure/login@v2
+        uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+          creds: |
+            {
+              "clientId": "${{ secrets.AZURE_CLIENT_ID }}",
+              "clientSecret": "${{ secrets.AZURE_CLIENT_SECRET }}",
+              "subscriptionId": "${{ secrets.AZURE_SUBSCRIPTION_ID }}",
+              "tenantId": "${{ secrets.AZURE_TENANT_ID }}"
+            }
 
-      - name: Deploy to Container Apps
-        id: deploy
+      - name: Login to ACR
+        run: az acr login --name ${{ env.ACR_NAME }}
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:latest .
+          docker push ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:latest
+
+      - name: Deploy to Container App
         run: |
           az containerapp update \
-            --name ${{ env.APP_NAME }} \
+            --name ${{ env.CONTAINER_APP_NAME }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --image ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          
-          if [ $? -ne 0 ]; then
-            echo "❌ Deployment failed"
-            exit 1
-          fi
-          
-          echo "✅ Deployment successful"
-
-      - name: Verify Deployment
-        if: success()
-        run: |
-          echo "🔍 Verifying deployment..."
-          az containerapp show \
-            --name ${{ env.APP_NAME }} \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --query "properties.runningStatus" -o tsv
-          
-          echo "✅ Container App is running"
-
+            --image ${{ env.ACR_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:latest
