@@ -207,7 +207,7 @@ Candidates: ${JSON.stringify(candidates)}
       .filter(ranking => ranking.score > 0.3) // Filter low-confidence recommendations
       .slice(0, limit)
       .map(ranking => {
-        const product = candidates.find(p => p.id === ranking.id);
+        const product = candidates.find((p: any) => p.id === ranking.id);
         if (!product) return null;
         
         return {

@@ -13,6 +13,7 @@ export default function Product({ params }) {
   const cart = useCart()
 
   const [product, setProduct] = useState({})
+  const [aiDescription, setAiDescription] = useState('')
 
   const getProduct = async () => {
     useIsLoading(true)
@@ -110,10 +111,35 @@ export default function Product({ params }) {
 
               <div className="border-b py-1" />
 
-              <div className="pt-3">
-                <div className="font-semibold pb-1">Description:</div>
-                <div className="text-sm">{product?.description}</div>
-              </div>
+        <div className="pt-3">
+          <div className="font-semibold pb-1">Description:</div>
+          <div className="text-sm">{product?.description}</div>
+          {product?.id && (
+            <div className="mt-4">
+              <button
+                onClick={async () => {
+                  try {
+                    const res = await fetch(`/api/products/descriptions?productId=${product.id}`);
+                    if (!res.ok) throw new Error('Failed');
+                    const data = await res.json();
+                    setAiDescription(data.description);
+                  } catch (e) {
+                    console.error(e);
+                  }
+                }}
+                className="bg-orange-600 hover:bg-orange-700 text-white text-sm px-3 py-1 rounded"
+              >
+                Generate AI Description
+              </button>
+              {aiDescription && (
+                <div className="mt-2 p-2 border rounded bg-gray-50 text-sm">
+                  {aiDescription}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
 
               {features.aiProductQnA && product?.id && (
                 <ProductQnA productId={product.id} />

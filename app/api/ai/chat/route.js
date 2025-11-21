@@ -121,6 +121,7 @@ User context: ${userId ? 'Returning customer' : 'New customer'}
 const assistantReply = await chatCompletion({
   messages: [
     { role: "system", content: systemPrompt },
+    { role: "system", content: enhancedContextPrompt },
     ...history,
   ],
   maxTokens: 600,

@@ -106,7 +106,7 @@ Candidates: ${JSON.stringify(candidates)}
         });
 
         // Parse AI response to get recommended product IDs
-        const recommendedIds = JSON.parse(aiAnswer);
+        const recommendedIds = JSON.parse(aiAnswer.trim());
         
         // Filter candidates to only include recommended products
         const recommendations = candidates
