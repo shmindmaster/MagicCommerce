@@ -97,7 +97,10 @@ export async function getUserPreferences(userId?: string): Promise<string[]> {
 
     // Extract keywords from product titles and descriptions
     const productTexts = products
-      .map((product: any) => `${product.title} ${product.description}`)
+      .map(
+        (product: { title: string; description: string }) =>
+          `${product.title} ${product.description}`
+      )
       .join(' ');
 
     if (!productTexts.trim()) return [];
