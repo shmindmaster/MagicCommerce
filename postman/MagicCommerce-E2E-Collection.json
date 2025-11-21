@@ -1,0 +1,405 @@
+{
+  "info": {
+    "_postman_id": "magiccommerce-e2e-suite",
+    "name": "MagicCommerce E2E Test Suite",
+    "description": "Comprehensive end-to-end API testing for MagicCommerce AI-native e-commerce platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "test_product_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "test_user_id",
+      "value": "test-user-123",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Health Check",
+      "item": [
+        {
+          "name": "API Health Check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has status field', function() {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('status');",
+                  "    pm.expect(response.status).to.equal('healthy');",
+                  "});",
+                  "",
+                  "pm.test('Database connection is healthy', function() {",
+                  "    const response = pm.response.json();",
+                  "    if(response.database) {",
+                  "        pm.expect(response.database).to.equal('connected');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/health",
+              "host": ["{{base_url}}"],
+              "path": ["api", "health"]
+            },
+            "description": "Verify API and database health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Products API",
+      "item": [
+        {
+          "name": "Get All Products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response is an array', function() {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test('Products have required fields', function() {",
+                  "    const products = pm.response.json();",
+                  "    if(products.length > 0) {",
+                  "        const product = products[0];",
+                  "        pm.expect(product).to.have.property('id');",
+                  "        pm.expect(product).to.have.property('title');",
+                  "        pm.expect(product).to.have.property('price');",
+                  "        pm.environment.set('test_product_id', product.id);",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/products",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products"]
+            }
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Product has required fields', function() {",
+                  "    const product = pm.response.json();",
+                  "    pm.expect(product).to.have.property('id');",
+                  "    pm.expect(product).to.have.property('title');",
+                  "    pm.expect(product).to.have.property('price');",
+                  "    pm.expect(product).to.have.property('description');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/product/{{test_product_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["api", "product", "{{test_product_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - AI Features",
+      "item": [
+        {
+          "name": "AI Product Search",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains results', function() {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('results');",
+                  "});",
+                  "",
+                  "pm.test('Search returns relevant products', function() {",
+                  "    const response = pm.response.json();",
+                  "    if(response.results && response.results.length > 0) {",
+                  "        pm.expect(response.results[0]).to.have.property('score');",
+                  "    }",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"laptop computer\",\n  \"limit\": 10\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/products/ai-search",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products", "ai-search"]
+            }
+          }
+        },
+        {
+          "name": "AI Chat",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has reply', function() {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('reply');",
+                  "    pm.expect(response.reply).to.be.a('string');",
+                  "    pm.expect(response.reply.length).to.be.above(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Tell me about your laptop products\",\n  \"context\": []\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ai/chat",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ai", "chat"]
+            }
+          }
+        },
+        {
+          "name": "Product Q&A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response has answer', function() {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('answer');",
+                  "    pm.expect(response.answer).to.be.a('string');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{test_product_id}}\",\n  \"question\": \"What are the key features and specifications?\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/ai/product-qna",
+              "host": ["{{base_url}}"],
+              "path": ["api", "ai", "product-qna"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Personalization",
+      "item": [
+        {
+          "name": "Track User Interaction",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200 or 201', function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  "",
+                  "pm.test('Tracking successful', function() {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.success || response.tracked).to.be.true;",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{test_user_id}}\",\n  \"productId\": \"{{test_product_id}}\",\n  \"action\": \"view\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/personalization/track",
+              "host": ["{{base_url}}"],
+              "path": ["api", "personalization", "track"]
+            }
+          }
+        },
+        {
+          "name": "Get Personalized Recommendations",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Response contains recommendations', function() {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('recommendations');",
+                  "    pm.expect(response.recommendations).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{test_user_id}}\",\n  \"limit\": 5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/personalization/recommendations",
+              "host": ["{{base_url}}"],
+              "path": ["api", "personalization", "recommendations"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Analytics",
+      "item": [
+        {
+          "name": "Track Analytics Event",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200 or 201', function() {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"page_view\",\n  \"properties\": {\n    \"page\": \"/\",\n    \"timestamp\": \"{{$timestamp}}\",\n    \"user_id\": \"{{test_user_id}}\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/analytics/track",
+              "host": ["{{base_url}}"],
+              "path": ["api", "analytics", "track"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

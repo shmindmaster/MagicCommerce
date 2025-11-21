@@ -1,8 +1,8 @@
 // app/libs/embeddingGenerator.ts
-import "server-only";
-import prisma from "./Prisma";
-import { getEmbeddings } from "./azureOpenAI";
-import { getAzureSearchClient } from "./azureSearch";
+import 'server-only';
+import prisma from './Prisma';
+import { getEmbeddings } from './azureOpenAI';
+import { getAzureSearchClient } from './azureSearch';
 
 interface ProductEmbedding {
   id: number;
@@ -29,18 +29,20 @@ function generateProductEmbeddingText(product: ProductEmbedding): string {
     const keywords = product.description
       .toLowerCase()
       .split(/\s+/)
-      .filter(word => word.length > 3)
+      .filter((word) => word.length > 3)
       .slice(0, 10);
-    parts.push(keywords.join(" "));
+    parts.push(keywords.join(' '));
   }
 
-  return parts.join(" ");
+  return parts.join(' ');
 }
 
 /**
  * Generate embedding for a single product
  */
-export async function generateProductEmbedding(product: ProductEmbedding): Promise<number[]> {
+export async function generateProductEmbedding(
+  product: ProductEmbedding
+): Promise<number[]> {
   const embeddingText = generateProductEmbeddingText(product);
   return await getEmbeddings(embeddingText);
 }
@@ -49,8 +51,8 @@ export async function generateProductEmbedding(product: ProductEmbedding): Promi
  * Generate and store embeddings for all products
  */
 export async function generateAllProductEmbeddings(): Promise<void> {
-  console.log("[EmbeddingGenerator] Starting batch embedding generation...");
-  
+  console.log('[EmbeddingGenerator] Starting batch embedding generation...');
+
   try {
     // Fetch all products from database
     const products = await prisma.product.findMany({
@@ -63,12 +65,14 @@ export async function generateAllProductEmbeddings(): Promise<void> {
       },
     });
 
-    console.log(`[EmbeddingGenerator] Processing ${products.length} products...`);
+    console.log(
+      `[EmbeddingGenerator] Processing ${products.length} products...`
+    );
 
     // Process products in batches to avoid rate limits
     const batchSize = 10;
     const searchClient = getAzureSearchClient();
-    
+
     for (let i = 0; i < products.length; i += batchSize) {
       const batch = products.slice(i, i + batchSize);
       const productsWithEmbeddings: ProductEmbedding[] = [];
@@ -76,15 +80,24 @@ export async function generateAllProductEmbeddings(): Promise<void> {
       // Generate embeddings for this batch
       for (const product of batch) {
         try {
-          const embedding = await generateProductEmbedding(product);
+          const embedding = await generateProductEmbedding({
+            ...product,
+            imageUrl: product.imageUrl ?? undefined,
+          });
           productsWithEmbeddings.push({
             ...product,
+            imageUrl: product.imageUrl ?? undefined,
             embedding,
           });
-          
-          console.log(`[EmbeddingGenerator] Generated embedding for product ${product.id}: ${product.title}`);
+
+          console.log(
+            `[EmbeddingGenerator] Generated embedding for product ${product.id}: ${product.title}`
+          );
         } catch (error) {
-          console.error(`[EmbeddingGenerator] Failed to generate embedding for product ${product.id}:`, error);
+          console.error(
+            `[EmbeddingGenerator] Failed to generate embedding for product ${product.id}:`,
+            error
+          );
           // Continue without embedding for this product
           productsWithEmbeddings.push(product);
         }
@@ -93,18 +106,27 @@ export async function generateAllProductEmbeddings(): Promise<void> {
       // Upload batch to Azure Search
       try {
         await searchClient.uploadDocuments(productsWithEmbeddings);
-        console.log(`[EmbeddingGenerator] Uploaded batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(products.length / batchSize)}`);
+        console.log(
+          `[EmbeddingGenerator] Uploaded batch ${
+            Math.floor(i / batchSize) + 1
+          }/${Math.ceil(products.length / batchSize)}`
+        );
       } catch (error) {
-        console.error(`[EmbeddingGenerator] Failed to upload batch ${Math.floor(i / batchSize) + 1}:`, error);
+        console.error(
+          `[EmbeddingGenerator] Failed to upload batch ${
+            Math.floor(i / batchSize) + 1
+          }:`,
+          error
+        );
       }
 
       // Small delay between batches to avoid rate limits
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
-    console.log("[EmbeddingGenerator] Batch embedding generation completed!");
+    console.log('[EmbeddingGenerator] Batch embedding generation completed!');
   } catch (error) {
-    console.error("[EmbeddingGenerator] Batch generation failed:", error);
+    console.error('[EmbeddingGenerator] Batch generation failed:', error);
     throw error;
   } finally {
     await prisma.$disconnect();
@@ -140,9 +162,14 @@ export async function updateProductEmbedding(productId: number): Promise<void> {
     const searchClient = getAzureSearchClient();
     await searchClient.uploadDocuments([productWithEmbedding]);
 
-    console.log(`[EmbeddingGenerator] Updated embedding for product ${productId}: ${product.title}`);
+    console.log(
+      `[EmbeddingGenerator] Updated embedding for product ${productId}: ${product.title}`
+    );
   } catch (error) {
-    console.error(`[EmbeddingGenerator] Failed to update product ${productId}:`, error);
+    console.error(
+      `[EmbeddingGenerator] Failed to update product ${productId}:`,
+      error
+    );
     throw error;
   } finally {
     await prisma.$disconnect();
@@ -156,10 +183,15 @@ export async function deleteProductEmbedding(productId: number): Promise<void> {
   try {
     const searchClient = getAzureSearchClient();
     await searchClient.deleteDocuments([productId]);
-    
-    console.log(`[EmbeddingGenerator] Deleted embedding for product ${productId}`);
+
+    console.log(
+      `[EmbeddingGenerator] Deleted embedding for product ${productId}`
+    );
   } catch (error) {
-    console.error(`[EmbeddingGenerator] Failed to delete product ${productId}:`, error);
+    console.error(
+      `[EmbeddingGenerator] Failed to delete product ${productId}:`,
+      error
+    );
     throw error;
   }
 }
@@ -171,11 +203,14 @@ export async function checkSearchIndexHealth(): Promise<boolean> {
   try {
     const searchClient = getAzureSearchClient();
     const stats = await searchClient.getIndexStats();
-    
+
     console.log(`[EmbeddingGenerator] Search index stats:`, stats);
     return stats.count > 0;
   } catch (error) {
-    console.error("[EmbeddingGenerator] Search index health check failed:", error);
+    console.error(
+      '[EmbeddingGenerator] Search index health check failed:',
+      error
+    );
     return false;
   }
 }
@@ -184,16 +219,18 @@ export async function checkSearchIndexHealth(): Promise<boolean> {
  * CLI script to initialize embeddings for all products
  */
 export async function initializeEmbeddings(): Promise<void> {
-  console.log("[EmbeddingGenerator] Initializing product embeddings...");
-  
+  console.log('[EmbeddingGenerator] Initializing product embeddings...');
+
   // Check if search index is healthy
   const isHealthy = await checkSearchIndexHealth();
   if (!isHealthy) {
-    console.warn("[EmbeddingGenerator] Search index appears to be empty or unhealthy");
+    console.warn(
+      '[EmbeddingGenerator] Search index appears to be empty or unhealthy'
+    );
   }
 
   // Generate embeddings for all products
   await generateAllProductEmbeddings();
-  
-  console.log("[EmbeddingGenerator] Initialization completed!");
+
+  console.log('[EmbeddingGenerator] Initialization completed!');
 }

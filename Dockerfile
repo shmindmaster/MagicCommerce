@@ -3,13 +3,27 @@ FROM node:20-alpine AS base
 
 # Dependencies stage
 FROM base AS deps
+RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
+
+# Install pnpm
+RUN npm install -g pnpm@10.0.0
+
+COPY package.json pnpm-lock.yaml ./
+# Use shamefully-hoist to fix Next.js module resolution issues
+RUN pnpm install --frozen-lockfile --shamefully-hoist
+
+# Generate Prisma Client in deps stage
+COPY prisma ./prisma
+RUN pnpm exec prisma generate
 
 # Builder stage
 FROM base AS builder
 WORKDIR /app
+
+# Install pnpm
+RUN npm install -g pnpm
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
@@ -17,11 +31,8 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-# Generate Prisma Client
-RUN npx prisma generate
-
 # Build Next.js (API routes will be included)
-RUN npm run build
+RUN pnpm run build
 
 # Production stage
 FROM base AS runner
