@@ -1,0 +1,36 @@
+name: Build and Push
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-push-app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - name: Log in to ACR
+        run: |
+          az acr login --name shacrapps
+          
+      - name: Build and Push app
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: |
+            shacrapps.azurecr.io/magiccommerce-app:${{ github.sha }}
+            shacrapps.azurecr.io/magiccommerce-app:latest
+
