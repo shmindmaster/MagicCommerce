@@ -1,0 +1,50 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "pretest:e2e": "npm run build",
+    "test": "playwright test",
+    "test:e2e": "playwright test",
+    "db:migrate": "prisma migrate dev",
+    "db:generate": "prisma generate",
+    "db:seed": "ts-node prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "dependencies": {
+    "@azure/storage-blob": "^12.29.1",
+    "@prisma/client": "^5.22.0",
+    "@stripe/stripe-js": "^4.8.0",
+    "autoprefixer": "^10.4.20",
+    "debounce": "^2.1.1",
+    "flag-icons": "^7.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "next": "^15.1.0",
+    "next-auth": "^4.24.10",
+    "postcss": "^8.5.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.4.0",
+    "react-responsive-carousel": "^3.2.23",
+    "react-toastify": "^10.0.6",
+    "stripe": "^17.3.1",
+    "tailwindcss": "^4.1.17"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@tailwindcss/postcss": "^4.1.17",
+    "@types/node": "^22.9.0",
+    "@types/react": "19.2.6",
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}
+

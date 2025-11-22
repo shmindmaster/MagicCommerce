@@ -2,7 +2,7 @@
 
 **Industry**: E-Commerce  
 **Domain**: https://magiccommerce.shtrial.com  
-**Type**: Full-stack AI Application
+**Type**: Full-stack AI Application (Next.js with API routes)
 
 ## Overview
 
@@ -26,7 +26,9 @@ MagicCommerce is an AI-powered e-commerce platform that enhances the shopping ex
   - Vision: `gpt-image-1-mini`
 - **Search**: Azure AI Search (`shared-search-standard-eastus2`, index: `magicommerce-products`)
 - **Storage**: Azure Blob Storage (`stmahumsharedapps`, container: `magicommerce-assets`)
-- **Deployment**: Azure Container App (`rg-shared-apps`)
+- **Deployment**: 
+  - Frontend: Azure Static Web App (`rg-shared-web`)
+  - Backend: Same SWA (Next.js API routes) or Container App (`rg-shared-apps`) if split later
 
 ## Architecture
 
